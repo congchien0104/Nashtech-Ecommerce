@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -44,10 +46,11 @@ namespace Nashtech_Ecommerce.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var model = _context.Categories.ToListAsync();
-            return View(model);
+            var categories = await _context.Categories.ToListAsync();
+            ViewBag.categories = categories;
+            return View();
         }
 
         // POST: Products/Create

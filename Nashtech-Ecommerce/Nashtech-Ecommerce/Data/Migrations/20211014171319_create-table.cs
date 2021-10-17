@@ -66,7 +66,7 @@ namespace Nashtech_Ecommerce.Data.Migrations
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategoryID = table.Column<int>(type: "int", nullable: false)
+                    CategoryID = table.Column<int>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

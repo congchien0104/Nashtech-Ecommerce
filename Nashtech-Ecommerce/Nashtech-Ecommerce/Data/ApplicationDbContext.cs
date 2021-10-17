@@ -20,5 +20,6 @@ namespace Nashtech_Ecommerce.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }

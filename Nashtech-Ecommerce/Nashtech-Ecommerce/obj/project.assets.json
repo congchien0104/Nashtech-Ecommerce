@@ -7498,11 +7498,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\source\\ASP.NETMVC\\Nashtech-Ecommerce\\Nashtech-Ecommerce\\Nashtech-Ecommerce.csproj",
+      "projectUniqueName": "C:\\Users\\User\\source\\Nastech\\Nashtech-Ecommerce\\Nashtech-Ecommerce\\Nashtech-Ecommerce.csproj",
       "projectName": "Nashtech-Ecommerce",
-      "projectPath": "C:\\Users\\User\\source\\ASP.NETMVC\\Nashtech-Ecommerce\\Nashtech-Ecommerce\\Nashtech-Ecommerce.csproj",
+      "projectPath": "C:\\Users\\User\\source\\Nastech\\Nashtech-Ecommerce\\Nashtech-Ecommerce\\Nashtech-Ecommerce.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\source\\ASP.NETMVC\\Nashtech-Ecommerce\\Nashtech-Ecommerce\\obj\\",
+      "outputPath": "C:\\Users\\User\\source\\Nastech\\Nashtech-Ecommerce\\Nashtech-Ecommerce\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",

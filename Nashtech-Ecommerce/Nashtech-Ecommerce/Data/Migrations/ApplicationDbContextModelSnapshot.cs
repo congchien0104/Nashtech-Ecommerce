@@ -307,7 +307,7 @@ namespace Nashtech_Ecommerce.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryID")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
