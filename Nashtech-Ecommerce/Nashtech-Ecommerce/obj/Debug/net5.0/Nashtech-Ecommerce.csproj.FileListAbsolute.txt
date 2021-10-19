@@ -352,3 +352,4 @@ C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net
 C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net5.0\Razor\Views\Products\Edit.cshtml.g.cs
 C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net5.0\Razor\Views\Products\Index.cshtml.g.cs
 C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net5.0\Razor\Views\Shared\_Categories.cshtml.g.cs
+C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net5.0\Razor\Views\Products\ProductCategory.cshtml.g.cs

@@ -23,9 +23,12 @@ namespace Nashtech_Ecommerce.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var categories = await _context.Categories.ToListAsync();
+            var products = await _context.Products.ToListAsync();
+            ViewBag.products = products;
+            return View(categories);
         }
         [Authorize]
         public IActionResult Privacy()

@@ -13,7 +13,7 @@ namespace Nashtech_Ecommerce.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
         public string Name { get; set; }
-        public byte[] Photo { get; set; }
+        public string Photo { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         [ForeignKey("ProductId")]
