@@ -22,13 +22,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Create">Cart</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Cart</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,6 +34,18 @@
                                 <button type="button" class="dropdown-item btn btn-info btn-sm">Cong Chien</button>
                             </div>
                         </li>
+                        <li class="nav-item">
+                            <form class="form-inline">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categories</a>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -47,15 +53,21 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="row">
+            <div class="col-2 pb-3">
+                @RenderSection("Categories", required: false)
+            </div>
+            <main role="main" class="col-10 pb-3">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - Nashtech_Ecommerce - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
+        
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

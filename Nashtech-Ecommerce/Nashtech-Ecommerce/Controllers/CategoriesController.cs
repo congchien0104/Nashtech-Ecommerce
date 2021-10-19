@@ -149,5 +149,11 @@ namespace Nashtech_Ecommerce.Controllers
         {
             return _context.Categories.Any(e => e.Id == id);
         }
+        public async Task<IActionResult> CategoryMenu()
+        {
+            //return View(await _context.Categories.ToListAsync());
+            var categories = await _context.Categories.ToListAsync();
+            return PartialView("_Categories", categories);
+        }
     }
 }

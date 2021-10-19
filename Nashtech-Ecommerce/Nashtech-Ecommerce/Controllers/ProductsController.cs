@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +17,12 @@ namespace Nashtech_Ecommerce.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            webHostEnvironment = hostEnvironment;
         }
 
         // GET: Products
@@ -44,10 +50,11 @@ namespace Nashtech_Ecommerce.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var model = _context.Categories.ToListAsync();
-            return View(model);
+            var categories = await _context.Categories.ToListAsync();
+            ViewBag.categories = categories;
+            return View();
         }
 
         // POST: Products/Create
@@ -144,6 +151,25 @@ namespace Nashtech_Ecommerce.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        [Route("productcategory/{id}")]
+        public async Task<IActionResult> ProductCategory(string id)
+        {
+            //var cateId = await _context.Categories.Where(s => id);
+            if (id == null)
+            {
+                return View();
+            }
+
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return View();
+            }
+            var products = await _context.Products.Where(s => s.CategoryID == id).ToListAsync();
+            ViewBag.products = products;
+            return View(await _context.Categories.ToListAsync());
         }
 
         private bool ProductExists(string id)

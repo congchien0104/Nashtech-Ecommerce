@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" id="picture-form" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -44,6 +44,12 @@
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="col-md-2 control-label">Employee Image</label>
+                <div class="col-md-10">
+                    <input class="form-control" type="file" name="pic" accept="image/*" />
+                </div>
+            </div>
+            <div class="form-group">
                 <label asp-for="CreatedDate" class="control-label"></label>
                 <input asp-for="CreatedDate" class="form-control" />
                 <span asp-validation-for="CreatedDate" class="text-danger"></span>
@@ -55,8 +61,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="CategoryID" class="control-label"></label>
-                <input asp-for="CategoryID" class="form-control" />
-                <span asp-validation-for="CategoryID" class="text-danger"></span>
+                <select asp-for="CategoryID"
+                        class="form-control"
+                        asp-items="@(new SelectList(@ViewBag.categories,"Id", "Name"))">
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
