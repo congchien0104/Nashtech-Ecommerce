@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Nashtech_Ecommerce.Models.Category>
+
+
+<div class="list-group">
+    <h3>Categories</h3>
+    @foreach (var item in Model)
+    {
+        <a class="list-group-item list-group-item-action" asp-controller="Products" asp-action="ProductCategory" asp-route-id=@item.Id>@item.Name</a>
+    }
+</div>

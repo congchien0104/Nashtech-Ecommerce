@@ -69,3 +69,79 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+/*My CSS*/
+.rating {
+    overflow: hidden;
+    display: block;
+    position: relative;
+}
+
+.rating-input {
+    position: absolute;
+    left: 0;
+    top: -50px;
+}
+
+.rating-star {
+    display: block;
+    width: 20px;
+    height: 17px;
+    background: url(../images/star.png) 0px 0px;
+    float: left;
+}
+
+.rating-star:hover {
+    background: url(../images/star.png) 0 -18px;
+}
+
+.rating-star1 {
+    display: block;
+    width: 20px;
+    height: 17px;
+    background: url(../images/a-star.png) 0 0px;
+    float: left;
+}
+
+.rating-star1:hover {
+    background: url(../images/a-star.png) 0 -20px;
+}
+
+/*My Rating*/
+
+.commentBox {
+    background-color: #efefef;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.starFade {
+    background-image: url('/Images/StarFade.gif');
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.starFadeN {
+    background-image: url('/Images/StarFade.gif');
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+}
+
+.starGlow {
+    background-image: url('/Images/starglow.gif');
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.starGlowN {
+    background-image: url('/Images/starglow.gif');
+    min-width: 30px;
+    min-height: 30px;
+    display: inline-block;
+}

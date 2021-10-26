@@ -19,12 +19,6 @@ namespace Nashtech_Ecommerce.Controllers
             _context = context;
         }
 
-        // View Customers
-        [HttpGet]
-        [Route("/customers")]
-        public async Task<IActionResult> getCustomer()
-        {
-            return Ok();
-        }
+
     }
 }

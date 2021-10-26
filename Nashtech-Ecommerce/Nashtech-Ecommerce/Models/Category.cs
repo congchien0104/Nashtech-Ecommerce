@@ -16,5 +16,6 @@ namespace Nashtech_Ecommerce.Models
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
+
     }
 }
