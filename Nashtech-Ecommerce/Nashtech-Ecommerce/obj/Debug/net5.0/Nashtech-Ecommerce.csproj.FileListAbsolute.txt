@@ -367,4 +367,6 @@ C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net
 C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net5.0\Razor\Views\Orders\Edit.cshtml.g.cs
 C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net5.0\Razor\Views\Orders\Index.cshtml.g.cs
 C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\obj\Debug\net5.0\Razor\Views\Shared\_Paging.cshtml.g.cs
-C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\bin\Debug\net5.0\PayPal.dll
+C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\User\source\Nastech\Nashtech-Ecommerce\Nashtech-Ecommerce\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
