@@ -46,12 +46,7 @@ namespace Nashtech_Ecommerce.Admin
                 return NotFound();
             }
 
-            return Ok(new
-            {
-                status = 200,
-                message = "Success",
-                date = category
-            });
+            return Ok(category);
         }
 
         [HttpPut("{id}")]
@@ -61,7 +56,7 @@ namespace Nashtech_Ecommerce.Admin
             {
                 return BadRequest();
             }
-
+            category.UpdatedDate = DateTime.Now;
             _context.Entry(category).State = EntityState.Modified;
 
             try
@@ -84,7 +79,7 @@ namespace Nashtech_Ecommerce.Admin
         }
 
         [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
+        public async Task<ActionResult<Category>> PostCategory([FromBody] Category category)
         {
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();

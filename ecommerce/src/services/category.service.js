@@ -8,27 +8,29 @@ const getCategories = () => {
 };
 
 const getCategory = (id) => {
-  return axios.get(`/categories/${id}`);
+  return axios.get(API_URL + `categories/${id}`, { headers: authHeader() });
 };
 
 const createCategory = (data) => {
-  return axios.post("/categories", data);
+  return axios.post(API_URL + "categories", data, { headers: authHeader() });
 };
 
 const updateCategory = (id, data) => {
-  return axios.put(`/categories/${id}`, data);
+  return axios.put(API_URL + `categories/${id}`, data, {
+    headers: authHeader(),
+  });
 };
 
 const removeCategory = (id) => {
-  return axios.delete(`/categories/${id}`);
+  return axios.delete(API_URL + `categories/${id}`, { headers: authHeader() });
 };
 
 const removeAll = () => {
-  return axios.delete(`/categories`);
+  return axios.delete(`categories`);
 };
 
 const findByTitle = (title) => {
-  return axios.get(`/categories?title=${title}`);
+  return axios.get(`categories?title=${title}`);
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

@@ -3,7 +3,7 @@ import CategoryService from "../services/category.service";
 import { Link } from "react-router-dom";
 //import axios from "axios";
 
-const CategoryList = () => {
+const CategoryList = (props) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -20,13 +20,16 @@ const CategoryList = () => {
       });
   };
   //console.log(categories);
+  const openCategory = (id) => {
+    console.log(id);
+
+    props.history.push("/categories/" + id);
+  };
 
   return (
     <div className="container">
       <h2>Categories</h2>
-      <button type="button" class="btn btn-success">
-        <Link to="/notfound">Create Category</Link>
-      </button>
+      <Link to="/categories/add">Create Category</Link>
       <table className="table mt-5">
         <thead className="thead-dark">
           <tr>
@@ -48,7 +51,11 @@ const CategoryList = () => {
                 <td>{category.createdDate}</td>
                 <td>{category.updatedDate}</td>
                 <td>
-                  <button type="button" class="btn btn-primary">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onClick={() => openCategory(category.id)}
+                  >
                     Edit
                   </button>
                   <button type="button" class="btn btn-danger ml-2">

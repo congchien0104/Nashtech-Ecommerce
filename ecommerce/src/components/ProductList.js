@@ -23,9 +23,7 @@ function ProductList() {
   return (
     <div className="container">
       <h2>Products</h2>
-      <button type="button" class="btn btn-success">
-        <Link to="/notfound">Create Product</Link>
-      </button>
+      <Link to="/products/add">Create Product</Link>
       <table className="table mt-5">
         <thead className="thead-dark">
           <tr>

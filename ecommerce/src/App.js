@@ -6,20 +6,16 @@ import "./App.css";
 import AuthService from "./services/auth.service";
 
 import Login from "./components/Login";
-//import Register from "./components/Register";
 import Home from "./components/Home";
 import CustomerList from "./components/CustomerList";
 import CategoryList from "./components/CategoryList";
 import NotFound from "./components/NotFound";
 import ProductList from "./components/ProductList";
-// import Profile from "./components/Profile";
-// import BoardUser from "./components/BoardUser";
-// import BoardModerator from "./components/BoardModerator";
-// import BoardAdmin from "./components/BoardAdmin";
-
+import AddCategory from "./components/AddCategory";
+import Category from "./components/Category";
+import AddProduct from "./components/AddProduct";
+import Product from "./components/Product";
 const App = () => {
-  // const [showModeratorBoard, setShowModeratorBoard] = useState(false);
-  // const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
@@ -27,8 +23,6 @@ const App = () => {
 
     if (user) {
       setCurrentUser(user);
-      // setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
-      // setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
   }, []);
 
@@ -107,14 +101,13 @@ const App = () => {
           <Route exact path={["/", "/home"]} component={Home} />
           <Route exact path="/login" component={Login} />
           <Route path="/customers" component={CustomerList} />
-          <Route path="/categories" component={CategoryList} />
-          <Route path="/products" component={ProductList} />
+          <Route exact path="/categories" component={CategoryList} />
+          <Route path="/categories/add" component={AddCategory} />
+          <Route path="/categories/:id" component={Category} />
+          <Route exact path="/products" component={ProductList} />
+          <Route path="/products/add" component={AddProduct} />
+          <Route path="/products/:id" component={Product} />
           <Route path="/notfound" component={NotFound} />
-          {/* <Route exact path="/register" component={Register} />
-          <Route exact path="/profile" component={Profile} />
-          <Route path="/user" component={BoardUser} />
-          <Route path="/mod" component={BoardModerator} />
-          <Route path="/admin" component={BoardAdmin} /> */}
         </Switch>
       </div>
     </div>
