@@ -1,85 +1,201 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import CategoryService from "../services/category.service";
+import ProductService from "../services/product.service";
 
-function Product(props) {
+const Product = (props) => {
+  const initialProductState = {
+    id: null,
+    name: "",
+    description: "",
+    price: "",
+    promationPrice: "",
+    quantity: null,
+    image: "",
+    categoryID: "",
+  };
+
+  const [categories, setCategories] = useState([]);
+  const [currentProduct, setCurrentProduct] = useState(initialProductState);
+  const [message, setMessage] = useState("");
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState();
+
+  const getProduct = (id) => {
+    ProductService.getProduct(id)
+      .then((response) => {
+        setCurrentProduct(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  useEffect(() => {
+    getProduct(props.match.params.id);
+    //retrieveCategories();
+    //console.log(categories);
+    console.log(props.match.params.id);
+  }, [props.match.params.id]);
+
+  useEffect(() => {
+    CategoryService.getCategories()
+      .then((response) => {
+        setCategories(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+  const retrieveCategories = () => {
+    CategoryService.getCategories()
+      .then((response) => {
+        setCategories(response.data);
+        console.log(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setCurrentProduct({ ...currentProduct, [name]: value });
+  };
+  const handleImageChange = (e) => {
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    alert("You have submitted the form.");
+    console.log(currentProduct.id);
+    var formData = new FormData();
+    formData.append("formfile", file);
+    formData.append("filename", fileName);
+    formData.append("name", currentProduct.name);
+    formData.append("description", currentProduct.description);
+    formData.append("price", currentProduct.price);
+    formData.append("promationprice", currentProduct.promationprice);
+    formData.append("quantity", currentProduct.quantity);
+    formData.append("categoryid", currentProduct.categoryid);
+    console.log(formData);
+    ProductService.updateProduct(currentProduct.id, formData)
+      .then((response) => {
+        //console.log(response.data);
+        props.history.push("/products");
+        setMessage("The category was updated successfully!");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
     <div className="container">
-      <form>
+      <form onSubmit={submitForm}>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputEmail4">Name</label>
+            <label htmlFor="name">Name</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              id="inputEmail4"
+              id="name"
               placeholder="Name"
+              onChange={handleInputChange}
+              name="name"
+              value={currentProduct.name}
             />
           </div>
           <div class="form-group col-md-6">
-            <label for="inputPassword4">Quantity</label>
+            <label htmlFor="quantity">Quantity</label>
             <input
-              type="password"
+              type="number"
               class="form-control"
-              id="inputPassword4"
+              id="quantity"
               placeholder="Quantity"
+              onChange={handleInputChange}
+              name="quantity"
+              value={currentProduct.quantity}
             />
           </div>
         </div>
         <div class="form-group">
-          <label for="inputAddress">Description</label>
+          <label htmlFor="description">Description</label>
           <input
             type="text"
             class="form-control"
-            id="inputAddress"
+            id="description"
             placeholder="Description"
+            onChange={handleInputChange}
+            name="description"
+            value={currentProduct.description}
           />
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputEmail4">Price</label>
+            <label htmlFor="price">Price</label>
             <input
-              type="email"
+              type="text"
               class="form-control"
-              id="inputEmail4"
+              id="price"
               placeholder="Price"
+              onChange={handleInputChange}
+              name="price"
+              value={currentProduct.price}
             />
           </div>
           <div class="form-group col-md-6">
-            <label for="inputPassword4">PromtionPrice</label>
+            <label htmlFor="promationPrice">PromationPrice</label>
             <input
-              type="password"
+              type="text"
               class="form-control"
-              id="inputPassword4"
-              placeholder="PromtionPrice"
+              id="promationPrice"
+              placeholder="PromationPrice"
+              onChange={handleInputChange}
+              name="promationPrice"
+              value={currentProduct.promationPrice}
             />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="inputEmail4">Image</label>
+            <label htmlFor="image">Image</label>
             <input
-              type="email"
+              type="file"
               class="form-control"
-              id="inputEmail4"
-              placeholder="Email"
+              id="image"
+              name="image"
+              onChange={handleImageChange}
             />
           </div>
           <div class="form-group col-md-6">
-            <label for="inputState">Category</label>
-            <select id="inputState" class="form-control">
-              <option>Tivi</option>
-              <option>SmartPhone</option>
-              <option>Laptop</option>
-              <option>Furniture</option>
+            <label htmlFor="categoryID">Category</label>
+            <select
+              id="categoryID"
+              class="form-control"
+              name="categoryID"
+              onChange={handleInputChange}
+              value={currentProduct.categoryID}
+            >
+              {categories.map((category, index) => (
+                <option key={index} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
             </select>
           </div>
         </div>
 
         <button type="submit" class="btn btn-primary">
-          Create Product
+          Update Product
         </button>
       </form>
     </div>
   );
-}
+};
 
 export default Product;

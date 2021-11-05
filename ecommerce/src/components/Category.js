@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CategoryService from "../services/category.service";
 
 const Category = (props) => {
+  //console.log(props);
   const initialCategoryState = {
     id: null,
     name: "",
@@ -14,7 +15,7 @@ const Category = (props) => {
     CategoryService.getCategory(id)
       .then((response) => {
         setCurrentCategory(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -23,7 +24,7 @@ const Category = (props) => {
 
   useEffect(() => {
     getCategory(props.match.params.id);
-    console.log(props.match.params.id);
+    //console.log(props.match.params.id);
   }, [props.match.params.id]);
 
   const handleInputChange = (event) => {
@@ -35,7 +36,7 @@ const Category = (props) => {
     console.log(currentCategory.id);
     CategoryService.updateCategory(currentCategory.id, currentCategory)
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         setMessage("The category was updated successfully!");
       })
       .catch((e) => {
@@ -47,7 +48,7 @@ const Category = (props) => {
     console.log(currentCategory.id);
     CategoryService.removeCategory(currentCategory.id)
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         props.history.push("/categories");
       })
       .catch((e) => {

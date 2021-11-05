@@ -27,12 +27,8 @@ namespace Nashtech_Ecommerce.Admin
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return Ok(new
-            {
-                status = 200,
-                message = "Success",
-                data = await _context.Categories.ToListAsync()
-            });
+            var categories = await _context.Categories.OrderBy(s => s.CreatedDate).ToListAsync();
+            return Ok(categories);
         }
 
         // GET: api/Categories/5
@@ -81,6 +77,8 @@ namespace Nashtech_Ecommerce.Admin
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory([FromBody] Category category)
         {
+            category.CreatedDate = DateTime.Now;
+            category.UpdatedDate = DateTime.Now;
             _context.Categories.Add(category);
             await _context.SaveChangesAsync();
 

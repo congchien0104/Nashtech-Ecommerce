@@ -1,29 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CategoryService from "../services/category.service";
 import { Link } from "react-router-dom";
 //import axios from "axios";
 
 const CategoryList = (props) => {
   const [categories, setCategories] = useState([]);
-
   useEffect(() => {
     retrieveCategories();
   }, []);
+
   const retrieveCategories = () => {
     CategoryService.getCategories()
       .then((response) => {
-        setCategories(response.data.data);
-        //console.log(response.data.data);
+        setCategories(response.data);
+        console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
+  };
+
+  const refreshList = () => {
+    retrieveCategories();
   };
   //console.log(categories);
   const openCategory = (id) => {
     console.log(id);
 
     props.history.push("/categories/" + id);
+  };
+
+  const deleteCategory = (id) => {
+    console.log(id);
+    CategoryService.removeCategory(id)
+      .then((response) => {
+        console.log(response.data);
+        refreshList();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   return (
@@ -58,7 +74,18 @@ const CategoryList = (props) => {
                   >
                     Edit
                   </button>
-                  <button type="button" class="btn btn-danger ml-2">
+                  <button
+                    type="button"
+                    class="btn btn-danger ml-2"
+                    onClick={() => {
+                      const confirmBox = window.confirm(
+                        "Do you really want to delete this Category?"
+                      );
+                      if (confirmBox === true) {
+                        deleteCategory(category.id);
+                      }
+                    }}
+                  >
                     Delete
                   </button>
                 </td>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -26,12 +27,8 @@ namespace Nashtech_Ecommerce.Admin
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return Ok(new
-            {
-                status = 200,
-                massage = "Success",
-                data = await _context.Products.ToListAsync()
-            });
+            var products = await _context.Products.OrderBy(s => s.CreatedDate).ToListAsync();
+            return Ok(products);
         }
 
         [HttpGet("{id}")]
@@ -44,18 +41,34 @@ namespace Nashtech_Ecommerce.Admin
                 return NotFound();
             }
 
-            return product;
+            return Ok(product);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(string id, Product product)
+        public async Task<IActionResult> PutProduct(string id, [FromForm] ProductViewModel product)
         {
             if (id != product.Id)
             {
                 return BadRequest();
             }
-
-            _context.Entry(product).State = EntityState.Modified;
+            var fileName = Path.GetFileName(product.FormFile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+            using (var fileSrteam = new FileStream(filePath, FileMode.Create))
+            {
+                await product.FormFile.CopyToAsync(fileSrteam);
+            }
+            var tempProduct = new Product
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                PromationPrice = product.PromationPrice,
+                Quantity = product.Quantity,
+                Image = fileName,
+                CategoryID = product.CategoryID,
+                UpdatedDate = DateTime.Now,
+            };
+            _context.Entry(tempProduct).State = EntityState.Modified;
 
             try
             {
@@ -77,9 +90,27 @@ namespace Nashtech_Ecommerce.Admin
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct([FromForm] ProductViewModel product)
         {
-            _context.Products.Add(product);
+            var fileName = Path.GetFileName(product.FormFile.FileName);
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", fileName);
+            using (var fileSrteam = new FileStream(filePath, FileMode.Create))
+            {
+                await product.FormFile.CopyToAsync(fileSrteam);
+            }
+            var tempProduct = new Product
+            {
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                PromationPrice = product.PromationPrice,
+                Quantity = product.Quantity,
+                Image = fileName,
+                CategoryID = product.CategoryID,
+                CreatedDate = DateTime.Now,
+                UpdatedDate = DateTime.Now,
+            };
+            _context.Products.Add(tempProduct);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);

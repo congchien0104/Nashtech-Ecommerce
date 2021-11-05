@@ -8,19 +8,22 @@ const getProducts = () => {
 };
 
 const getProduct = (id) => {
-  return axios.get(`/products/${id}`);
+  return axios.get(API_URL + `/products/${id}`, { headers: authHeader() });
 };
 
 const createProduct = (data) => {
-  return axios.post("/products", data);
+  return axios.post(API_URL + "/products", data, { headers: authHeader() });
 };
 
 const updateProduct = (id, data) => {
-  return axios.put(`/products/${id}`, data);
+  console.log(id);
+  return axios.put(API_URL + `/products/${id}`, data, {
+    headers: authHeader(),
+  });
 };
 
 const removeProduct = (id) => {
-  return axios.delete(`/products/${id}`);
+  return axios.delete(API_URL + `/products/${id}`, { headers: authHeader() });
 };
 
 const removeAll = () => {

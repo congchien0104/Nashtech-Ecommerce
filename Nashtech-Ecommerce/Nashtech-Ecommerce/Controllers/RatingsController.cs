@@ -70,7 +70,7 @@ namespace Nashtech_Ecommerce.Controllers
             var comment = form["Comment"].ToString();
             var productId = form["ProductId"].ToString();
             var rating = int.Parse(form["Rating"]);
-            var Name = form["Name"].ToString();
+            //var Name = form["Name"].ToString();
 
             var rate = new Rating()
             {
@@ -79,7 +79,7 @@ namespace Nashtech_Ecommerce.Controllers
                 CreatedDate = DateTime.Now,
                 UpdatedDate = DateTime.Now,
                 ProductId = productId,
-                UserId = Name,
+                UserId = userId,
             };
 
 

@@ -37,7 +37,7 @@ const AddCategory = () => {
       });
   };
 
-  const newTutorial = () => {
+  const newCategory = () => {
     setCategory(initialCategoryState);
     setSubmitted(false);
   };
@@ -50,7 +50,7 @@ const AddCategory = () => {
             {submitted ? (
               <div>
                 <h4>You submitted successfully!</h4>
-                <button className="btn btn-success" onClick={newTutorial}>
+                <button className="btn btn-success" onClick={newCategory}>
                   Add
                 </button>
               </div>

@@ -29,31 +29,55 @@ namespace Nashtech_Ecommerce.Controllers
         {
             var products = await _context.Products.ToListAsync();
 
-            //var totalItems = products.Count();
-            //// Tính số trang hiện thị (mỗi trang hiện thị ITEMS_PER_PAGE mục)
-            //int totalPages = (int)Math.Ceiling((double)totalItems / ITEMS_PER_PAGE);
-            //if (totalPages < 1) totalPages = 1;
-            //if (pageNumber == 0) pageNumber = 1;
+            var totalItems = products.Count();
+            // Tính số trang hiện thị (mỗi trang hiện thị ITEMS_PER_PAGE mục)
+            int totalPages = (int)Math.Ceiling((double)totalItems / ITEMS_PER_PAGE);
+            if (totalPages < 1) totalPages = 1;
+            if (pageNumber == 0) pageNumber = 1;
 
-            //if (pageNumber > totalPages)
-            //{
-            //    return RedirectToRoute("Home", "Index");
-            //}
+            if (pageNumber > totalPages)
+            {
+                return RedirectToRoute("Home", "Index");
+            }
 
 
-            //// Chỉ lấy các Post trang hiện tại  (theo pageNumber)
-            //products = products
-            //    .Skip(ITEMS_PER_PAGE * (pageNumber - 1))
-            //    .Take(ITEMS_PER_PAGE)
-            //    .OrderByDescending(p => p.Name).ToList();
+            // Chỉ lấy các Post trang hiện tại  (theo pageNumber)
+            products = products
+                .Skip(ITEMS_PER_PAGE * (pageNumber - 1))
+                .Take(ITEMS_PER_PAGE)
+                .OrderByDescending(p => p.Name).ToList();
 
-            //ViewData["pageNumber"] = pageNumber;
-            //ViewData["totalPages"] = totalPages;
+            ViewData["pageNumber"] = pageNumber;
+            ViewData["totalPages"] = totalPages;
 
             return View(products);
         }
 
+        public  async Task<ActionResult> Search(string search, int pageNumber)
+        {
+            var products = await _context.Products.Where(s => s.Name.Contains(search)).ToListAsync();
+            var totalItems = products.Count();
+            // Tính số trang hiện thị (mỗi trang hiện thị ITEMS_PER_PAGE mục)
+            int totalPages = (int)Math.Ceiling((double)totalItems / ITEMS_PER_PAGE);
+            if (totalPages < 1) totalPages = 1;
+            if (pageNumber == 0) pageNumber = 1;
 
+            if (pageNumber > totalPages)
+            {
+                return RedirectToRoute("Home", "Index");
+            }
+
+
+            // Chỉ lấy các Post trang hiện tại  (theo pageNumber)
+            products = products
+                .Skip(ITEMS_PER_PAGE * (pageNumber - 1))
+                .Take(ITEMS_PER_PAGE)
+                .OrderByDescending(p => p.Name).ToList();
+
+            ViewData["pageNumber"] = pageNumber;
+            ViewData["totalPages"] = totalPages;
+            return View("Index", products);
+        }
 
         [Authorize]
         public IActionResult Privacy()
@@ -66,5 +90,7 @@ namespace Nashtech_Ecommerce.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
     }
 }

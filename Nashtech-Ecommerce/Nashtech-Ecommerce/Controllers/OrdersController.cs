@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +17,7 @@ namespace Nashtech_Ecommerce.Controllers
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
         public const string CARTKEY = "cart";
 
         // Lấy cart từ Session (danh sách CartItem)
@@ -29,10 +32,17 @@ namespace Nashtech_Ecommerce.Controllers
             }
             return new List<CartItem>();
         }
+        // Xóa cart khỏi session
+        void ClearCart()
+        {
+            var session = HttpContext.Session;
+            session.Remove(CARTKEY);
+        }
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Orders
@@ -72,10 +82,26 @@ namespace Nashtech_Ecommerce.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CreatedDate,ShipName,ShipMobile,ShipAddress,UserId")] Order order)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
             {
-                _context.Add(order);
+                order.UserId = userId;
+                _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
+                var cart = GetCartItems();
+                //var orderDetail = new OrderDetail();
+                foreach(var item in cart)
+                {
+                    var orderDetail         = new OrderDetail();
+                    orderDetail.Quantity    = item.quantity;
+                    orderDetail.ProductId   = item.product.Id;
+                    orderDetail.Price       = item.product.Price;
+                    orderDetail.OrderId     = order.Id;
+                    _context.OrderDetails.Add(orderDetail);
+                    await _context.SaveChangesAsync();
+                }
+
+                //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(order);
