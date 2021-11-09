@@ -24,7 +24,7 @@ const Product = (props) => {
     ProductService.getProduct(id)
       .then((response) => {
         setCurrentProduct(response.data);
-        console.log(response.data);
+        //console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
@@ -39,14 +39,7 @@ const Product = (props) => {
   }, [props.match.params.id]);
 
   useEffect(() => {
-    CategoryService.getCategories()
-      .then((response) => {
-        setCategories(response.data);
-        console.log(response.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    retrieveCategories();
   }, []);
   const retrieveCategories = () => {
     CategoryService.getCategories()
@@ -64,7 +57,7 @@ const Product = (props) => {
     setCurrentProduct({ ...currentProduct, [name]: value });
   };
   const handleImageChange = (e) => {
-    console.log(e.target.files[0]);
+    //console.log(e.target.files[0]);
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
@@ -72,17 +65,30 @@ const Product = (props) => {
   const submitForm = (e) => {
     e.preventDefault();
     alert("You have submitted the form.");
-    console.log(currentProduct.id);
+    console.log("Edit");
+    console.log(currentProduct);
     var formData = new FormData();
     formData.append("formfile", file);
     formData.append("filename", fileName);
+    formData.append("id", currentProduct.id);
     formData.append("name", currentProduct.name);
     formData.append("description", currentProduct.description);
     formData.append("price", currentProduct.price);
-    formData.append("promationprice", currentProduct.promationprice);
+    formData.append("promationPrice", currentProduct.promationPrice);
     formData.append("quantity", currentProduct.quantity);
-    formData.append("categoryid", currentProduct.categoryid);
-    console.log(formData);
+    formData.append("categoryID", currentProduct.categoryID);
+    // console.log(formData);
+    // var data = {
+    //   id: currentProduct.id,
+    //   name: currentProduct.name,
+    //   description: currentProduct.description,
+    //   price: currentProduct.price,
+    //   promationprice: currentProduct.promationprice,
+    //   quantity: currentProduct.quantity,
+    //   image: currentProduct.image,
+    //   categoryid: currentProduct.categoryid,
+    // };
+    console.log(formData.id);
     ProductService.updateProduct(currentProduct.id, formData)
       .then((response) => {
         //console.log(response.data);

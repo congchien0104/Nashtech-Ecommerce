@@ -45,7 +45,7 @@ namespace Nashtech_Ecommerce.Admin
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(string id, [FromForm] ProductViewModel product)
+        public async Task<ActionResult<Product>> PutProduct(string id, [FromForm] ProductViewModel product)
         {
             if (id != product.Id)
             {
@@ -57,17 +57,16 @@ namespace Nashtech_Ecommerce.Admin
             {
                 await product.FormFile.CopyToAsync(fileSrteam);
             }
-            var tempProduct = new Product
-            {
-                Name = product.Name,
-                Description = product.Description,
-                Price = product.Price,
-                PromationPrice = product.PromationPrice,
-                Quantity = product.Quantity,
-                Image = fileName,
-                CategoryID = product.CategoryID,
-                UpdatedDate = DateTime.Now,
-            };
+            var tempProduct = new Product();
+            tempProduct.Id = id;
+            tempProduct.Name = product.Name;
+            tempProduct.Description = product.Description;
+            tempProduct.Price = product.Price;
+            tempProduct.PromationPrice = product.PromationPrice;
+            tempProduct.Quantity = product.Quantity;
+            tempProduct.Image = fileName;
+            tempProduct.CategoryID = product.CategoryID;
+            tempProduct.UpdatedDate = DateTime.Now;
             _context.Entry(tempProduct).State = EntityState.Modified;
 
             try
