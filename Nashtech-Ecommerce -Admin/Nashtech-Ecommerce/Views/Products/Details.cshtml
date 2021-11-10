@@ -1,0 +1,98 @@
+﻿@model Nashtech_Ecommerce.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var comments = (IEnumerable<Nashtech_Ecommerce.Models.Rating>)ViewBag.Comments;
+    var ratingSum = ViewBag.RatingSum;
+    var ratingCount = ViewBag.RatingCount;
+
+    decimal rating = 0;
+    if (ratingCount > 0)
+    {
+        rating = (ratingSum / ratingCount);
+    }
+    var totalRating = decimal.Parse(rating.ToString());
+}
+
+<h1>@Model.Name</h1>
+
+<div class="row">
+    <div class="col-sm">
+        <div>
+            @for (var i = 1; i <= totalRating; i++)
+            {
+                <span class="starGlowN"></span>
+            }
+            @for (var i = (totalRating + 1); i <= 5; i++)
+            {
+                <span class="starFadeN"></span>
+            }
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top" src="~/images/@Model.Image" alt=@Model.Name>
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-title">@Model.Price VND</p>
+                <div class="row">
+                    <div class="col-8">
+                        <a class="btn btn-primary" asp-controller="Products" asp-action="AddToCart" asp-route-id=@Model.Id>Add To Cart</a>
+                    </div>
+                    <div class="col-4">
+                        <a class="btn btn-success mr-2" asp-controller="Products" asp-action="Details" asp-route-id=@Model.Id>Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <h3>Description</h3>
+        <div>
+            @Model.Description
+        </div>
+    </div>
+</div>
+
+
+<div>
+    @foreach (var c in comments)
+    {
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <p>@c.UserId</p>
+                <i>@c.CreatedDate</i>
+                <br />
+                @for (var i = 1; i <= c.Rate; i++)
+                {
+                    <span class="starGlowN"></span>
+                }
+                @for (var i = (c.Rate + 1); i <= 5; i++)
+                {
+                    <span class="starFadeN"></span>
+                }
+            </div>
+            <div class="col-md-9">
+                @Html.Raw(c.Comment.Replace("\n", "<br />"))
+
+            </div>
+        </div>
+    }
+    <hr />
+</div>
+
+
+@await Html.PartialAsync("_RatingNow")
+
+<script>
+    function SCRate() {
+        for (var i = 1; i <= @totalRating; i++) {
+            $("#sRate" + i).attr('class', 'starGlowN');
+        }
+    }
+    $(function(){
+        SCRate();
+    });
+</script>

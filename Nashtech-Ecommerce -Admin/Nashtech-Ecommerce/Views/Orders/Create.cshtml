@@ -1,0 +1,58 @@
+﻿@model Nashtech_Ecommerce.Models.Order
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h4>Order</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ShipName" class="control-label"></label>
+                    <input asp-for="ShipName" class="form-control" />
+                    <span asp-validation-for="ShipName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShipMobile" class="control-label"></label>
+                    <input asp-for="ShipMobile" class="form-control" />
+                    <span asp-validation-for="ShipMobile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ShipAddress" class="control-label"></label>
+                    <input asp-for="ShipAddress" class="form-control" />
+                    <span asp-validation-for="ShipAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+}
+else
+{
+    <p>Please login to order.</p>
+    <p>
+        <a asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </p>
+}
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
